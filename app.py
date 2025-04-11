@@ -1,6 +1,6 @@
 import json
 import traceback
-from flask import Flask, render_template, jsonify
+from flask import Flask, render_template, jsonify, request
 from collections import defaultdict
 import re  # Import regular expressions for slightly better filtering
 
@@ -93,25 +93,20 @@ def get_models(make):
                       models.append(original_key)
         else: # Single word make
              # Check if key starts with "MAKE " or is exactly "MAKE" (but avoid adding make itself)
-             if key_upper.startswith(make_upper + ' '):
+             if key_upper.startswith(make_upper + ' ') or key_upper == make_upper:  # Modified line
                   models.append(original_key)
-             # Avoid adding keys like "FORD" when make="FORD"
-             # Add a check maybe for keys that DON'T contain another known make? Less reliable.
 
     # Filter out keys that look *only* like the make name itself
     # (e.g. prevent "FORD" key appearing when make="FORD")
     # This is imperfect because model keys might ALSO be just "FORD" in bad data
     filtered_models = [m for m in models if m.strip().upper() != make_upper]
 
-    # If filtering removed everything, maybe the only keys WERE the make name?
-    # Return the original list in that case, but log a warning.
-    if models and not filtered_models:
-        print(f"Warning: Models list for make '{make}' only contained keys matching the make name itself. Returning potentially incorrect list: {models}")
-        return jsonify(sorted(list(set(models)))) # Use original list
-
-    # Return unique, sorted list
-    return jsonify(sorted(list(set(filtered_models))))
-
+    # If filtering removed everything, or if the filtered list is the same as the original,
+    # return the original list. This is a more robust approach.
+    if not filtered_models or len(filtered_models) == len(models):
+        return jsonify(sorted(list(set(models))))
+    else:
+        return jsonify(sorted(list(set(filtered_models))))
 
 @app.route('/api/years/<make>/<path:model_key>')
 # model_key is the original key selected from the model dropdown
@@ -134,45 +129,57 @@ def get_years(make, model_key):
         print(f"Error: Data for model key '{model_key}' is not a dictionary. Cannot get years.")
         return jsonify([])
 
-@app.route('/api/details/<make>/<path:model_key>/<year_range_key>')
-# model_key is original key, year_range_key is original year key
-def get_details(make, model_key, year_range_key):
+@app.route('/api/details', methods=['POST'])  # Changed route definition
+def search_details():
     """
-    API: Returns final details directly from the raw data structure.
+    API: Searches for car details based on a query string.
+    This is a simplified example and needs adaptation!
     """
     if not RAW_CAR_DATA:
-         return jsonify({"error": "Car data not loaded"}), 500
+        return jsonify({"error": "Car data not loaded"}), 500
 
     try:
-        # Access the nested structure directly from raw data
-        # Use .get for safer access
-        year_data_dict = RAW_CAR_DATA.get(model_key, {})
-        details = year_data_dict.get(year_range_key)
+        data = request.get_json()  # Get the JSON data from the request
+        query = data.get('query', '').lower()  # Safely get the query, default to empty string
+    except:
+        return jsonify({"error": "Invalid request format"}), 400
 
-        if details and isinstance(details, dict): # Check if details were found and are a dictionary
-            # --- Basic Link Correction ---
-            link_keys = ['engine_oil_link', 'gearbox_oil_link', 'diff_oil_link',
-                        'pas_fluid_link', 'brake_fluid_link', 'coolant_link']
-            corrected_details = details.copy()
-            for key in link_keys:
-                if key in corrected_details and isinstance(corrected_details[key], str):
-                    link_value = corrected_details[key].strip()
-                    if link_value and not link_value.lower().startswith(('http://', 'https://', 'consult')):
-                        corrected_details[key] = 'https://' + link_value.lstrip(':')
-            return jsonify(corrected_details)
-        else:
-            if not details:
-                 print(f"Error: Details dictionary not found for {make} -> {model_key} -> {year_range_key}")
-            elif not isinstance(details, dict):
-                 print(f"Error: Retrieved details object is not a dictionary: {details}")
-            return jsonify({"error": "Details not found or invalid format"}), 404
+    if not query:
+        return jsonify([]), 400  # Bad request if no query
 
-    except Exception as e:
-        # Catch potential errors during lookup if structure is unexpected
-        print(f"Error retrieving details for {make} -> {model_key} -> {year_range_key}: {e!r}")
-        traceback.print_exc()
-        return jsonify({"error": "Server error retrieving details"}), 500
+    results = []
 
+    for make, models in RAW_CAR_DATA.items():
+        for model, years in models.items():
+            for year, details in years.items():
+                full_text = f"{make} {model} {year}".lower() # Combine make, model, year for search
+                if query in full_text:
+                    results.append(details) # Append the whole details dictionary
+
+    return jsonify(results)
+
+
+@app.route('/api/suggest/<query>')
+def get_suggestions(query):
+    """
+    API: Returns a list of make/model suggestions based on the query,
+    categorized into 'makes' and 'models'.
+    """
+    if not RAW_CAR_DATA:
+        return jsonify({"makes": [], "models": []})
+
+    query_lower = query.lower()
+    make_suggestions = []
+    model_suggestions = []
+
+    for make, models in RAW_CAR_DATA.items():
+        if query_lower in make.lower():
+            make_suggestions.append(make)
+        for model_name in models.keys():
+            if query_lower in model_name.lower():
+                model_suggestions.append(f"{make} {model_name}")
+
+    return jsonify({"makes": list(set(make_suggestions))[:5], "models": list(set(model_suggestions))[:5]})
 
 # --- Run the Flask Development Server ---
 if __name__ == '__main__':
