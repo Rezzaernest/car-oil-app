@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Oil Finder</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        /* Basic styling for the search-based interface */
+        #search-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            position: relative; /* For absolute positioning of suggestions */
+        }
+
+        #search-input {
+            padding: 8px;
+            width: 300px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        #search-button {
+            padding: 8px 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+
+        #suggestions-list {
+            position: absolute;
+            background-color: white;
+            border: 1px solid #ccc;
+            width: 300px;
+            margin-top: 40px; /* Position below the input */
+            border-radius: 0 0 4px 4px;
+            z-index: 10;
+            max-height: 200px; /* Add a max height */
+            overflow-y: auto; /* Add scrollbar if needed */
+        }
+
+        #suggestions-list div {
+            padding: 8px;
+            cursor: pointer;
+        }
+
+        #suggestions-list div:hover {
+            background-color: #f0f0f0;
+        }
+
+        #make-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Responsive grid */
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        #make-list h2 {
+            grid-column: 1 / -1; /* Span the full width */
+            text-align: center;
+        }
+
+        .make-item {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        .make-item:hover {
+            background-color: #eee;
+        }
+    </style>
+</head>
+<body>
+    <h1>Car Oil Finder</h1>
+
+    <div id="make-list">  <h2>Popular Makes</h2>
+        <ul>
+            {% for make in makes %}
+                <li class="make-item">{{ make }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div id="search-container">
+        <input type="text" id="search-input" placeholder="Enter car make and model (e.g., Ford Focus)">
+        <button id="search-button">Search</button>
+        <div id="suggestions-list"></div>  </div>
+
+    <div id="results-area">
+        <p>Enter a car make and model to find oil information.</p>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
