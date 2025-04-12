@@ -1,8 +1,183 @@
+// Sample car makes data - in a real application, this would come from a database or API
+const carMakes = [
+    "TALBOT",
+    "TOYOTA",
+    "TRABANT",
+    "TRIUMPH",
+    "TVR",
+    "UNIPOWER",
+    "VANDEN",
+    "VAUXHALL",
+    "VAUXHALL/OPEL",
+    "VOLKSWAGEN",
+    "WARTBURG",
+    "WILLYS",
+    "WOLSELEY",
+    "ZASTAVA"
+];
+
+// Function to populate the car makes list
+function populateCarMakesList() {
+    const carMakesList = document.getElementById('car-makes-list');
+
+    carMakes.forEach(make => {
+        const listItem = document.createElement('li');
+        const makeBox = document.createElement('div');
+
+        makeBox.className = 'car-make-box';
+        makeBox.textContent = make;
+
+        listItem.appendChild(makeBox);
+        carMakesList.appendChild(listItem);
+
+        // Add click event to each make box
+        makeBox.addEventListener('click', () => {
+            document.getElementById('search-input').value = make;
+        });
+    });
+}
+
+// Sample car models data - this would come from a database in a real application
+const carModels = {
+    "TOYOTA": ["Corolla", "Camry", "RAV4", "Prius", "Land Cruiser"],
+    "VOLKSWAGEN": ["Golf", "Passat", "Polo", "Tiguan", "Beetle"],
+    // Add more makes and models as needed
+};
+
+// Function to show suggestions based on input
+function showSuggestions(input) {
+    const suggestionsList = document.getElementById('suggestions-list');
+    suggestionsList.innerHTML = '';
+
+    if (!input) {
+        suggestionsList.style.display = 'none';
+        return;
+    }
+
+    const inputLower = input.toLowerCase();
+    let suggestions = [];
+
+    // Check for make matches
+    carMakes.forEach(make => {
+        if (make.toLowerCase().includes(inputLower)) {
+            suggestions.push(make);
+        }
+    });
+
+    // Check for make+model matches
+    for (const make in carModels) {
+        carModels[make].forEach(model => {
+            const fullName = `${make} ${model}`;
+            if (fullName.toLowerCase().includes(inputLower)) {
+                suggestions.push(fullName);
+            }
+        });
+    }
+
+    // Limit suggestions to top 10
+    suggestions = suggestions.slice(0, 10);
+
+    if (suggestions.length > 0) {
+        suggestionsList.style.display = 'block';
+
+        suggestions.forEach(suggestion => {
+            const div = document.createElement('div');
+            div.textContent = suggestion;
+            div.addEventListener('click', () => {
+                document.getElementById('search-input').value = suggestion;
+                suggestionsList.style.display = 'none';
+
+                // Optionally trigger search immediately
+                // handleSearch();
+            });
+            suggestionsList.appendChild(div);
+        });
+    } else {
+        suggestionsList.style.display = 'none';
+    }
+}
+
+// Function to handle search
+function handleSearch() {
+    const searchInput = document.getElementById('search-input');
+    const searchTerm = searchInput.value.trim();
+    const resultsArea = document.getElementById('results-area');
+
+    if (searchTerm) {
+        // In a real application, you would send this to your backend or API
+        console.log(`Searching for: ${searchTerm}`);
+
+        // Example of displaying results
+        resultsArea.innerHTML = `
+            <p>Searching for oil information for: <strong>${searchTerm}</strong></p>
+            <p>Please wait while we find the recommended oil type...</p>
+        `;
+
+        // Simulate a search delay
+        setTimeout(() => {
+            resultsArea.innerHTML = `
+                <p>Recommended oil for <strong>${searchTerm}</strong>:</p>
+                <p>Engine Oil: 5W-30 Synthetic</p>
+                <p>Oil Capacity: 4.5 liters</p>
+                <p>Oil Change Interval: 10,000 km or 12 months</p>
+            `;
+        }, 1000);
+    } else {
+        resultsArea.innerHTML = '<p>Please enter a car make and model</p>';
+    }
+}
+
+// Initialize the page
 document.addEventListener('DOMContentLoaded', () => {
     const searchInput = document.getElementById('search-input');
     const searchButton = document.getElementById('search-button');
     const resultsArea = document.getElementById('results-area');
     const suggestionsList = document.getElementById('suggestions-list');
+    const carMakesList = document.getElementById('car-makes-list');
+
+    // --- Function to fetch car makes and populate the list ---
+    async function fetchAndPopulateCarMakes() {
+        try {
+            // Try to fetch makes from the API
+            const response = await fetch('/api/makes');
+            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+            const makes = await response.json();
+            populateCarMakesList(makes);
+        } catch (error) {
+            console.error('Error fetching car makes:', error);
+            // If API call fails, use a fallback list of popular makes
+            const fallbackMakes = [
+                "TALBOT", "TOYOTA", "TRABANT", "TRIUMPH", "TVR",
+                "UNIPOWER", "VANDEN", "VAUXHALL", "VAUXHALL/OPEL",
+                "VOLKSWAGEN", "WARTBURG", "WILLYS", "WOLSELEY", "ZASTAVA"
+            ];
+            populateCarMakesList(fallbackMakes);
+        }
+    }
+
+    // --- Function to populate the car makes list ---
+    function populateCarMakesList(makes) {
+        if (!carMakesList) return;
+
+        carMakesList.innerHTML = ''; // Clear existing list
+
+        makes.forEach(make => {
+            const listItem = document.createElement('li');
+            const makeBox = document.createElement('div');
+
+            makeBox.className = 'car-make-box';
+            makeBox.textContent = make;
+
+            // Add click event to each make box
+            makeBox.addEventListener('click', () => {
+                searchInput.value = make;
+                performSearch(make);
+            });
+
+            listItem.appendChild(makeBox);
+            carMakesList.appendChild(listItem);
+        });
+    }
 
     // --- Function to display search results ---
     function displayResults(results) {
@@ -61,6 +236,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Function to perform the search ---
     async function performSearch(query) {
         try {
+            resultsArea.innerHTML = '<p>Searching...</p>'; // Show loading message
+
             const response = await fetch('/api/details', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -156,14 +333,17 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // --- Initial display of makes (if desired) ---
-    const makeList = document.getElementById('make-list');
-    if (makeList) {
-        makeList.querySelectorAll('.make-item').forEach(item => {
-            item.addEventListener('click', () => {
-                searchInput.value = item.textContent;
-                performSearch(item.textContent);
-            });
-        });
-    }
+    // --- Event listener for Enter key in search input ---
+    searchInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            const query = searchInput.value.trim();
+            if (query) {
+                performSearch(query);
+                suggestionsList.innerHTML = ''; // Clear suggestions
+            }
+        }
+    });
+
+    // --- Initialize the page ---
+    fetchAndPopulateCarMakes(); // Fetch and populate car makes list
 });
