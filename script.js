@@ -76,58 +76,57 @@ document.addEventListener("DOMContentLoaded", () => {
       .join(" ")
   }
 
-  // Function to load sitemap.xml and extract product URLs
+  // Function to load sitemap from Shopify directly
   async function loadSitemap() {
     try {
-      console.log("Attempting to load sitemap.xml...")
-      const response = await fetch("sitemap.xml")
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`)
+      console.log("Attempting to load sitemap from Shopify...")
+
+      // Use the direct Shopify sitemap URL
+      const sitemapUrl = "https://www.castrolclassic.co.za/sitemap_products_1.xml?from=7745608351789&to=8083098927149"
+
+      // Use a CORS proxy if needed (for local development)
+      // const corsProxy = "https://cors-anywhere.herokuapp.com/"
+      // const response = await fetch(corsProxy + sitemapUrl)
+
+      // For production, you might need to handle this server-side or use a different approach
+      // For now, we'll use a hardcoded mapping of product slugs to URLs based on the sitemap
+
+      console.log("Using pre-defined product mapping from sitemap")
+
+      // Create a mapping of product slugs to URLs based on the sitemap
+      const productUrls = {
+        xl30: "https://www.castrolclassic.co.za/products/classic-xl30",
+        "classic-xl30": "https://www.castrolclassic.co.za/products/classic-xl30",
+        xxl40: "https://www.castrolclassic.co.za/products/classic-xxl40",
+        "classic-xxl40": "https://www.castrolclassic.co.za/products/classic-xxl40",
+        xl20w50: "https://www.castrolclassic.co.za/products/castrol-classic-xl-20w50-1l",
+        "xl-20w50": "https://www.castrolclassic.co.za/products/castrol-classic-xl-20w50-1l",
+        "xl20w-50": "https://www.castrolclassic.co.za/products/castrol-classic-xl-20w50-1l",
+        "xl-20w-50": "https://www.castrolclassic.co.za/products/castrol-classic-xl-20w50-1l",
+        ep90: "https://www.castrolclassic.co.za/products/classic-ep90",
+        "classic-ep90": "https://www.castrolclassic.co.za/products/classic-ep90",
+        ep140: "https://www.castrolclassic.co.za/products/classic-ep140",
+        "classic-ep140": "https://www.castrolclassic.co.za/products/classic-ep140",
+        d140: "https://www.castrolclassic.co.za/products/classic-d140",
+        "classic-d140": "https://www.castrolclassic.co.za/products/classic-d140",
+        st90: "https://www.castrolclassic.co.za/products/classic-st90",
+        "classic-st90": "https://www.castrolclassic.co.za/products/classic-st90",
+        tqf: "https://www.castrolclassic.co.za/products/classic-tqf",
+        "classic-tqf": "https://www.castrolclassic.co.za/products/classic-tqf",
+        gp50: "https://www.castrolclassic.co.za/products/classic-gp50",
+        "classic-gp50": "https://www.castrolclassic.co.za/products/classic-gp50",
+        r40: "https://www.castrolclassic.co.za/products/castrol-r40",
+        "castrol-r40": "https://www.castrolclassic.co.za/products/castrol-r40",
+        ep80w: "https://www.castrolclassic.co.za/products/transmax-manual-ep80w",
+        "manual-ep80w": "https://www.castrolclassic.co.za/products/transmax-manual-ep80w",
+        "gtx-10w-40": "https://www.castrolclassic.co.za/products/castrol-gtx-classic-10w-40-5l",
+        "gtx-10w40": "https://www.castrolclassic.co.za/products/castrol-gtx-classic-10w-40-5l",
       }
 
-      const text = await response.text()
-      console.log("Sitemap XML loaded, length:", text.length)
-
-      const parser = new DOMParser()
-      const xmlDoc = parser.parseFromString(text, "text/xml")
-
-      // Check if parsing was successful
-      const parserError = xmlDoc.querySelector("parsererror")
-      if (parserError) {
-        console.error("XML parsing error:", parserError.textContent)
-        return {}
-      }
-
-      // Extract all URLs from the sitemap
-      const urlElements = xmlDoc.getElementsByTagName("url")
-      console.log("Found", urlElements.length, "URLs in sitemap")
-
-      const productUrls = {}
-
-      for (let i = 0; i < urlElements.length; i++) {
-        const locElement = urlElements[i].getElementsByTagName("loc")[0]
-        if (locElement) {
-          const url = locElement.textContent
-          // Extract the product slug from the URL
-          const urlParts = url.split("/")
-          const slug = urlParts[urlParts.length - 1]
-
-          // Store the URL with a normalized key for easier matching
-          productUrls[slug.toLowerCase()] = url
-
-          // Also store with common variations
-          if (slug.includes("classic-")) {
-            const shortSlug = slug.replace("classic-", "")
-            productUrls[shortSlug.toLowerCase()] = url
-          }
-        }
-      }
-
-      console.log("Processed", Object.keys(productUrls).length, "product URLs from sitemap")
+      console.log("Product mapping loaded with", Object.keys(productUrls).length, "products")
       return productUrls
     } catch (error) {
       console.error("Error loading sitemap:", error)
-      alert("Could not load sitemap.xml. Please check the console for details.")
       return {}
     }
   }
@@ -281,50 +280,35 @@ document.addEventListener("DOMContentLoaded", () => {
       const variations = [
         oilType
           .toLowerCase()
-          .replace(/\s+/g, "-"), // xl30 -> xl30
+          .replace(/\s+/g, ""), // xl30
+        oilType
+          .toLowerCase()
+          .replace(/\s+/g, "-"), // xl-30
         oilType
           .toLowerCase()
           .replace(/\//g, "-")
-          .replace(/\s+/g, "-"), // xl 20w/50 -> xl-20w-50
-        "classic-" + oilType.toLowerCase().replace(/\s+/g, "-"), // xl30 -> classic-xl30
+          .replace(/\s+/g, "-"), // xl-20w-50
+        "classic-" + oilType.toLowerCase().replace(/\s+/g, "-"), // classic-xl-30
         formattedOilType
           .toLowerCase()
-          .replace(/\s+/g, "-"), // XL 30 -> xl-30
-        "classic-" + formattedOilType.toLowerCase().replace(/\s+/g, "-"), // XL 30 -> classic-xl-30
+          .replace(/\s+/g, ""), // xl30
+        formattedOilType
+          .toLowerCase()
+          .replace(/\s+/g, "-"), // xl-30
+        "classic-" + formattedOilType.toLowerCase().replace(/\s+/g, "-"), // classic-xl-30
       ]
 
       // Check if any variation exists in the sitemap
       for (const variation of variations) {
         if (sitemapData[variation]) {
+          console.log(`Found direct product URL for ${oilType}: ${sitemapData[variation]}`)
           return sitemapData[variation]
-        }
-      }
-
-      // Special cases for common oil types
-      const specialCases = {
-        xl30: "classic-xl30",
-        xxl40: "classic-xxl40",
-        xl20w50: "castrol-classic-xl-20w50-1l",
-        "xl20w-50": "castrol-classic-xl-20w50-1l",
-        ep90: "classic-ep90",
-        ep140: "classic-ep140",
-        d140: "classic-d140",
-        st90: "classic-st90",
-        tqf: "classic-tqf",
-        gp50: "classic-gp50",
-        ep80w: "transmax-manual-ep80w",
-      }
-
-      for (const [key, value] of Object.entries(specialCases)) {
-        if (oilType.toLowerCase().replace(/\s+/g, "").includes(key)) {
-          if (sitemapData[value]) {
-            return sitemapData[value]
-          }
         }
       }
     }
 
     // Fallback to search URL if no direct product URL is found
+    console.log(`No direct product URL found for ${oilType}, using search URL`)
     return `https://www.castrolclassic.co.za/search?q=${encodeURIComponent(formattedOilType)}`
   }
 
