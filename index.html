@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Oil Finder | Castrol Classic</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-top">
+            <div class="mobile-menu">
+                <button class="mobile-menu-btn"><i class="fas fa-bars"></i></button>
+            </div>
+            <div class="logo">
+                <a href="https://castrolclassic.co.za">
+                    <img src="https://cdn.shopify.com/s/files/1/0623/1326/7245/files/Logo_2.png?v=1716933488" alt="Castrol Classic Logo">
+                </a>
+            </div>
+            <div class="header-icons">
+                <a href="#"><i class="fas fa-user"></i></a>
+                <a href="#"><i class="fas fa-shopping-bag"></i></a>
+            </div>
+        </div>
+        <nav>
+            <div class="nav-container">
+                <a href="https://www.castrolclassic.co.za/">Shop</a>
+                <a href="https://www.castrolclassic.co.za/collections/motor-oil">Oils</a>
+                <a href="https://www.castrolclassic.co.za/collections/brake-fluid">Fluids & Greases</a>
+                <a href="https://www.castrolclassic.co.za/collections/merch">Merch</a>
+                <a href="https://www.castrolclassic.co.za/products/castrol-classic-oil">Gift Cards</a>
+                <a href="https://www.castrolclassic.co.za/pages/heritage">History</a>
+                <a href="https://www.castrolclassic.co.za/pages/contact-us-1">Contact</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <h1>Castrol Classic Online Oil Finder</h1>
+
+        <!-- Search Section -->
+        <section class="search-section">
+            <h2 class="search-title">Discover the Castrol Classic lubricant your vehicle deserves.</h2>
+            <div id="search-container">
+                <input type="text" id="search-input" placeholder="Enter car make and model">
+                <button id="search-button">Search</button>
+                <div id="suggestions-list"></div>
+            </div>
+        </section>
+
+        <!-- Brands Grid Section -->
+        <section class="brands-section">
+            <h2 class="brands-title">Popular Makes</h2>
+            <div id="make-list">
+                <!-- Car makes will be inserted here by JavaScript -->
+            </div>
+            <button id="show-more-btn" class="show-more-btn">Show More</button>
+        </section>
+
+        <!-- Results Section -->
+        <section class="results-section">
+            <h2 class="results-title">Results</h2>
+            <div id="results-area">
+                <p>Enter a car make and model to find oil information.</p>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Shop</h3>
+                <ul>
+                    <li><a href="https://www.castrolclassic.co.za/collections/motor-oil">Engine/Motor Oil</a></li>
+                    <li><a href="https://www.castrolclassic.co.za/collections/gear-oil">Transmission/Gear Box Oils</a></li>
+                    <li><a href="https://www.castrolclassic.co.za/collections/brake-fluid">Brake Fluids</a></li>
+                    <li><a href="https://www.castrolclassic.co.za/collections/additives">Fuel Additives/Lead Replacement</a></li>
+                    <li><a href="https://www.castrolclassic.co.za/collections/greases">Grease</a></li>
+                    <li><a href="https://www.castrolclassic.co.za/collections/coolant">Coolant/Anti Freeze</a></li>
+                    <li><a href="https://www.castrolclassic.co.za/collections/merch">Merch/Tools</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Information</h3>
+                <ul>
+                    <li><a href="https://www.castrolclassic.co.za/policies/refund-policy">Refund policy</a></li>
+                    <li><a href="https://www.castrolclassic.co.za/policies/privacy-policy">Privacy policy</a></li>
+                    <li><a href="https://www.castrolclassic.co.za/policies/shipping-policy">Shipping policy</a></li>
+                    <li><a href="https://www.castrolclassic.co.za/policies/contact-information">Contact information</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact Us</h3>
+                <ul>
+                    <li>Call/WhatsApp: +27 79 744 0031</li>
+                    <li>Email: info@castrolclassic.co.za</li>
+                    <li>
+                        <div class="social-icons">
+                            <a href="https://www.facebook.com/imoilssa"><i class="fab fa-facebook-f"></i></a>
+                            <a href="https://www.instagram.com/castrolclassic/"><i class="fab fa-instagram"></i></a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            &copy; 2025 Castrol Classic Online. All rights reserved.
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
