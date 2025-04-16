@@ -1,4 +1,23 @@
 document.addEventListener("DOMContentLoaded", () => {
+  // Analytics tracking function
+  function trackEvent(eventName, eventParams = {}) {
+    // Check if dataLayer exists (for GTM)
+    if (window.dataLayer) {
+      window.dataLayer.push({
+        event: eventName,
+        ...eventParams
+      });
+    }
+
+    // Check if gtag exists (for GA4)
+    if (window.gtag) {
+      gtag('event', eventName, eventParams);
+    }
+
+    // Log the event to console for debugging
+    console.log(`Event tracked: ${eventName}`, eventParams);
+  }
+
   // Mobile menu toggle
   const mobileMenuBtn = document.querySelector(".mobile-menu-btn")
   const navContainer = document.querySelector(".nav-container")
@@ -6,6 +25,10 @@ document.addEventListener("DOMContentLoaded", () => {
   if (mobileMenuBtn && navContainer) {
     mobileMenuBtn.addEventListener("click", () => {
       navContainer.classList.toggle("active")
+      // Track mobile menu toggle
+      trackEvent('mobile_menu_toggle', {
+        state: navContainer.classList.contains('active') ? 'opened' : 'closed'
+      });
     })
   }
 
@@ -34,6 +57,11 @@ document.addEventListener("DOMContentLoaded", () => {
         showMoreBtn.textContent = "Show More"
       }
       expandedMakesList = !expandedMakesList
+
+      // Track show more/less interaction
+      trackEvent('toggle_makes_list', {
+        action: expandedMakesList ? 'expanded' : 'collapsed'
+      });
     })
   }
 
@@ -53,6 +81,11 @@ document.addEventListener("DOMContentLoaded", () => {
         if (searchInput) {
           searchInput.value = make
           performSearch(make)
+
+          // Track make selection
+          trackEvent('make_selected', {
+            make: make
+          });
         }
       })
       makeList.appendChild(makeItem)
@@ -124,9 +157,21 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       console.log("Product mapping loaded with", Object.keys(productUrls).length, "products")
+
+      // Track sitemap loaded
+      trackEvent('sitemap_loaded', {
+        product_count: Object.keys(productUrls).length
+      });
+
       return productUrls
     } catch (error) {
       console.error("Error loading sitemap:", error)
+
+      // Track sitemap loading error
+      trackEvent('sitemap_load_error', {
+        error_message: error.message
+      });
+
       return {}
     }
   }
@@ -154,9 +199,20 @@ document.addEventListener("DOMContentLoaded", () => {
         allModels[make] = Object.keys(data[make])
       }
 
+      // Track car data loaded
+      trackEvent('car_data_loaded', {
+        makes_count: makes.length
+      });
+
       return makes.sort()
     } catch (error) {
       console.error("Error loading car data:", error)
+
+      // Track car data loading error
+      trackEvent('car_data_load_error', {
+        error_message: error.message
+      });
+
       // Fallback to hardcoded makes if data.json can't be loaded
       return ["AC", "ALFA ROMEO", "ASTON MARTIN", "AUDI", "BENTLEY", "BMW"]
     }
@@ -172,6 +228,13 @@ document.addEventListener("DOMContentLoaded", () => {
       if (query.length < 2) {
         suggestionsList.style.display = "none"
         return
+      }
+
+      // Track search typing - debounce this in production to avoid excessive events
+      if (query.length >= 3) {
+        trackEvent('search_typing', {
+          query: query
+        });
       }
 
       // Filter makes that match the query
@@ -213,6 +276,12 @@ document.addEventListener("DOMContentLoaded", () => {
               searchInput.value = make
               suggestionsList.style.display = "none"
               performSearch(make)
+
+              // Track make suggestion selected
+              trackEvent('suggestion_selected', {
+                type: 'make',
+                value: make
+              });
             })
             suggestionsList.appendChild(item)
           })
@@ -234,14 +303,36 @@ document.addEventListener("DOMContentLoaded", () => {
               searchInput.value = `${make} ${model}`
               suggestionsList.style.display = "none"
               performSearch(`${make} ${model}`)
+
+              // Track model suggestion selected
+              trackEvent('suggestion_selected', {
+                type: 'model',
+                make: make,
+                model: model,
+                combined: `${make} ${model}`
+              });
             })
             suggestionsList.appendChild(item)
           })
         }
 
         suggestionsList.style.display = "block"
+
+        // Track suggestions shown
+        trackEvent('suggestions_shown', {
+          query: query,
+          makes_count: matchingMakes.length,
+          models_count: matchingModels.length
+        });
       } else {
         suggestionsList.style.display = "none"
+
+        // Track no suggestions available
+        if (query.length >= 3) {
+          trackEvent('no_suggestions', {
+            query: query
+          });
+        }
       }
     })
 
@@ -351,6 +442,18 @@ document.addEventListener("DOMContentLoaded", () => {
               buyLink.innerHTML =
                 'Buy Now <i class="fas fa-external-link-alt" style="margin-left: 5px; font-size: 0.8em;"></i>'
               buyLink.target = "_blank"
+
+              // Track buy now click
+              buyLink.addEventListener('click', (e) => {
+                trackEvent('buy_now_click', {
+                  oil_type: 'engine_oil',
+                  product: result.engine_oil,
+                  model: result.model_year_text || '',
+                  year_range: result.year_range || '',
+                  url: productUrl
+                });
+              });
+
               p.appendChild(buyLink)
             }
           }
@@ -374,6 +477,18 @@ document.addEventListener("DOMContentLoaded", () => {
               buyLink.innerHTML =
                 'Buy Now <i class="fas fa-external-link-alt" style="margin-left: 5px; font-size: 0.8em;"></i>'
               buyLink.target = "_blank"
+
+              // Track buy now click
+              buyLink.addEventListener('click', (e) => {
+                trackEvent('buy_now_click', {
+                  oil_type: 'gearbox_oil',
+                  product: result.gearbox_oil,
+                  model: result.model_year_text || '',
+                  year_range: result.year_range || '',
+                  url: productUrl
+                });
+              });
+
               p.appendChild(buyLink)
             }
           }
@@ -397,6 +512,18 @@ document.addEventListener("DOMContentLoaded", () => {
               buyLink.innerHTML =
                 'Buy Now <i class="fas fa-external-link-alt" style="margin-left: 5px; font-size: 0.8em;"></i>'
               buyLink.target = "_blank"
+
+              // Track buy now click
+              buyLink.addEventListener('click', (e) => {
+                trackEvent('buy_now_click', {
+                  oil_type: 'rear_axle_oil',
+                  product: result.rear_axle_oil,
+                  model: result.model_year_text || '',
+                  year_range: result.year_range || '',
+                  url: productUrl
+                });
+              });
+
               p.appendChild(buyLink)
             }
           }
@@ -406,8 +533,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
         resultsArea.appendChild(resultDiv)
       })
+
+      // Track search results displayed
+      trackEvent('search_results_displayed', {
+        results_count: results.length
+      });
     } else {
       resultsArea.innerHTML = "<p>No results found. Please try a more specific search.</p>"
+
+      // Track no search results
+      trackEvent('no_search_results');
     }
   }
 
@@ -459,6 +594,11 @@ document.addEventListener("DOMContentLoaded", () => {
       // Show loading indicator
       resultsArea.innerHTML = "<p>Searching for oil information...</p>"
 
+      // Track search started
+      trackEvent('search_performed', {
+        query: query
+      });
+
       // Search the data
       const results = searchCarData(query)
 
@@ -471,6 +611,12 @@ document.addEventListener("DOMContentLoaded", () => {
       console.error("Search error:", error)
       if (resultsArea) {
         resultsArea.innerHTML = `<p class="error">Search failed: ${error.message}</p>`
+
+        // Track search error
+        trackEvent('search_error', {
+          query: query,
+          error_message: error.message
+        });
       }
     }
   }
@@ -500,8 +646,16 @@ document.addEventListener("DOMContentLoaded", () => {
             const query = searchInput.value.trim()
             if (query) {
               performSearch(query)
+
+              // Track search button click
+              trackEvent('search_button_click', {
+                query: query
+              });
             } else if (resultsArea) {
               resultsArea.innerHTML = "<p>Please enter a car make and model to search.</p>"
+
+              // Track empty search attempt
+              trackEvent('empty_search_attempt');
             }
           }
         })
@@ -514,13 +668,26 @@ document.addEventListener("DOMContentLoaded", () => {
             const query = searchInput.value.trim()
             if (query) {
               performSearch(query)
+
+              // Track search via enter key
+              trackEvent('search_enter_key', {
+                query: query
+              });
             }
           }
         })
       }
+
+      // Track app initialization complete
+      trackEvent('app_initialized');
     } catch (error) {
       console.error("Initialization error:", error)
       alert("There was an error initializing the application. Please check the console for details.")
+
+      // Track initialization error
+      trackEvent('initialization_error', {
+        error_message: error.message
+      });
     }
   }
 
