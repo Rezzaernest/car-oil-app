@@ -3,35 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
- <title>Castrol Classic Online South Africa Oil Finder | Find the Right Castrol Oil for Your Classic Car</title>
-
-    <meta name="description"
-        content="Find the perfect Castrol Classic oil for your vintage or classic car. Our oil finder tool helps you locate the ideal lubricant for your vehicle's make and model.">
-
-    <meta name="keywords" content="Castrol Classic, oil finder, classic car oil, vintage car lubricant, car oil, engine oil, gearbox oil, grease, motorcycle, castrol, South Africa, ">
-
-    <meta name="author" content="Castrol Classic">
-
-    <meta name="robots" content="index, follow">
-
-    <link rel="canonical" href="https://findyouroil.castrolclassic.co.za/">
-
-    <meta property="og:title" content="Castrol Classic Online Oil Finder | Find the Right Castrol Oil for Your Classic Car">
-    <meta property="og:description"
-        content="Find the perfect Castrol Classic oil for your vintage or classic car. Our oil finder tool helps you locate the ideal lubricant for your vehicle's make and model.">
-    <meta property="og:image" content="https://cdn.shopify.com/s/files/1/0623/1326/7245/files/Logo_2.png?v=1716933488">
-    <meta property="og:url" content="https://findyouroil.castrolclassic.co.za/">
-    <meta property="og:type" content="website">
-
-    <link rel="icon" href="https://cdn.shopify.com/s/files/1/0623/1326/7245/files/Logo_2.png?v=1716933488" type="image/x-icon">    <link rel="stylesheet" href="styles.css">
+    <title>Car Oil Finder | Castrol Classic</title>
+    <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-FXF01H83RF"></script>
+    <!-- Google Analytics tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'G-FXF01H83RF');
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-XXXXXXXXXX');
     </script>
 </head>
 <body>
@@ -39,37 +20,46 @@
     <header>
         <div class="header-top">
             <div class="mobile-menu">
-                <button class="mobile-menu-btn"><i class="fas fa-bars"></i></button>
+                <button class="mobile-menu-btn" id="mobile-menu-toggle"><i class="fas fa-bars"></i></button>
             </div>
             <div class="logo">
-                <a href="https://castrolclassic.co.za">
+                <a href="https://castrolclassic.co.za" id="logo-link">
                     <img src="https://cdn.shopify.com/s/files/1/0623/1326/7245/files/Logo_2.png?v=1716933488" alt="Castrol Classic Logo">
                 </a>
             </div>
+
         </div>
         <nav>
             <div class="nav-container">
-                <a href="https://www.castrolclassic.co.za/">Shop</a>
-                <a href="https://www.castrolclassic.co.za/collections/motor-oil">Oils</a>
-                <a href="https://www.castrolclassic.co.za/collections/brake-fluid">Fluids & Greases</a>
-                <a href="https://www.castrolclassic.co.za/collections/merch">Merch</a>
-                <a href="https://www.castrolclassic.co.za/products/castrol-classic-oil">Gift Cards</a>
-                <a href="https://www.castrolclassic.co.za/pages/heritage">History</a>
-                <a href="https://www.castrolclassic.co.za/pages/contact-us-1">Contact</a>
+                <a href="https://www.castrolclassic.co.za/" id="nav-shop">Shop</a>
+                <a href="https://www.castrolclassic.co.za/collections/motor-oil" id="nav-oils">Oils</a>
+                <a href="https://www.castrolclassic.co.za/collections/brake-fluid" id="nav-fluids">Fluids & Greases</a>
+                <a href="https://www.castrolclassic.co.za/collections/merch" id="nav-merch">Merch</a>
+                <a href="https://www.castrolclassic.co.za/products/castrol-classic-oil" id="nav-gift">Gift Cards</a>
+                <a href="https://www.castrolclassic.co.za/pages/heritage" id="nav-history">History</a>
+                <a href="https://www.castrolclassic.co.za/pages/contact-us-1" id="nav-contact">Contact</a>
             </div>
         </nav>
     </header>
 
     <!-- Main Content -->
     <div class="container">
-        <h1>Castrol Classic Online Oil Finder</h1>
+        <section class="hero-section">
+            <div class="hero-content">
+                <h1>Castrol Classic Oil Finder</h1>
+                <p class="hero-subtitle">Find the perfect lubricant for your classic vehicle</p>
+            </div>
+        </section>
 
         <!-- Search Section -->
         <section class="search-section">
-            <h2 class="search-title">Discover the Castrol Classic lubricant your vehicle deserves.</h2>
+            <h2 class="search-title">Discover the Castrol Classic lubricant your vehicle deserves</h2>
             <div id="search-container">
-                <input type="text" id="search-input" placeholder="Enter car make and model">
-                <button id="search-button">Search</button>
+                <div class="search-input-wrapper">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" id="search-input" placeholder="Enter car make and model">
+                    <button id="search-button">Search</button>
+                </div>
                 <div id="suggestions-list"></div>
             </div>
         </section>
@@ -87,7 +77,69 @@
         <section class="results-section">
             <h2 class="results-title">Results</h2>
             <div id="results-area">
-                <p>Enter a car make and model to find oil information.</p>
+                <div class="initial-results-message">
+                    <i class="fas fa-oil-can results-icon"></i>
+                    <p>Enter a car make and model to find oil information.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Featured Products Section (New for 2025) -->
+        <section class="featured-section">
+            <h2 class="featured-title">Mechanics Favourites</h2>
+            <div class="featured-products">
+                <div class="product-card" id="product-xl20w/50">
+                    <div class="product-image">
+                        <img src="https://www.castrolclassic.co.za/cdn/shop/files/CastrolXL20w_50.png?v=1722688094" alt="Castrol Classic XL 20W/50">
+                    </div>
+                    <div class="product-info">
+                        <h3>Castrol Classic XL 20W/50</h3>
+                        <p class="product-description">Castrol Classic XL 20W-50 is a conventional multigrade engine oil of good all round performance, formulated with high quality mineral oils plus selected additives, ideally suited to older technology and classic car engines</p>
+                        <a href="https://www.castrolclassic.co.za/products/castrol-classic-xl-20w50-1l" class="product-link">View Product</a>
+                    </div>
+                </div>
+                <div class="product-card" id="product-`vmp`">
+                    <div class="product-image">
+                        <img src="https://www.castrolclassic.co.za/cdn/shop/files/Classic_Valvemaster_Plus_250ml_light_group.png?v=1716991887&width=1346" alt="Castrol Classic XXL40">
+                    </div>
+                    <div class="product-info">
+                        <h3>Classic Valvemaster Plus Lead Replacement Additive</h3>
+                        <p class="product-description">Valvemaster Plus provides the best protection against valve seat recession after lead, while keeping your fuel system clean and providing excellent corrosion protection.</p>
+                        <a href="https://www.castrolclassic.co.za/products/classic-valvemaster-plus" class="product-link">View Product</a>
+                    </div>
+                </div>
+                <div class="product-card" id="product-rr363">
+                    <div class="product-image">
+                        <img src="https://www.castrolclassic.co.za/cdn/shop/files/RR363_530x_2x_1d4e1bf3-32b4-43c4-9c8a-b4a133562414.webp?v=1727082468&width=1346" alt="Castrol Classic RR363">
+                    </div>
+                    <div class="product-info">
+                        <h3>RR363 Brake Fluid (1946-1980)</h3>
+                        <p class="product-description"> This is the correct fluid for all post-War Rolls-Royce & Bentley models up to 1980 (when mineral based LHM fluid was introduced). RR363 is a superior version of standard DOT3 synthetic brake fluid. </p>
+                        <a href="https://www.castrolclassic.co.za/products/rr363-brake-fluid-rolls-royce-bentley" class="product-link">View Product</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Why Choose Section (New for 2025) -->
+        <section class="why-choose-section">
+            <h2>Why Choose Castrol Classic Oils?</h2>
+            <div class="benefits-container">
+                <div class="benefit-item" id="benefit-heritage">
+                    <i class="fas fa-history"></i>
+                    <h3>Heritage Formulations</h3>
+                    <p>Original specifications designed for classic engines</p>
+                </div>
+                <div class="benefit-item" id="benefit-protection">
+                    <i class="fas fa-shield-alt"></i>
+                    <h3>Superior Protection</h3>
+                    <p>Specialized additives for vintage components</p>
+                </div>
+                <div class="benefit-item" id="benefit-expertise">
+                    <i class="fas fa-cogs"></i>
+                    <h3>Technical Expertise</h3>
+                    <p>Over 120 years of lubrication experience</p>
+                </div>
             </div>
         </section>
     </div>
@@ -98,33 +150,33 @@
             <div class="footer-column">
                 <h3>Shop</h3>
                 <ul>
-                    <li><a href="https://www.castrolclassic.co.za/collections/motor-oil">Engine/Motor Oil</a></li>
-                    <li><a href="https://www.castrolclassic.co.za/collections/gear-oil">Transmission/Gear Box Oils</a></li>
-                    <li><a href="https://www.castrolclassic.co.za/collections/brake-fluid">Brake Fluids</a></li>
-                    <li><a href="https://www.castrolclassic.co.za/collections/additives">Fuel Additives/Lead Replacement</a></li>
-                    <li><a href="https://www.castrolclassic.co.za/collections/greases">Grease</a></li>
-                    <li><a href="https://www.castrolclassic.co.za/collections/coolant">Coolant/Anti Freeze</a></li>
-                    <li><a href="https://www.castrolclassic.co.za/collections/merch">Merch/Tools</a></li>
+                    <li><a href="https://www.castrolclassic.co.za/collections/motor-oil" id="footer-engine-oil">Engine/Motor Oil</a></li>
+                    <li><a href="https://www.castrolclassic.co.za/collections/gear-oil" id="footer-gear-oil">Transmission/Gear Box Oils</a></li>
+                    <li><a href="https://www.castrolclassic.co.za/collections/brake-fluid" id="footer-brake-fluid">Brake Fluids</a></li>
+                    <li><a href="https://www.castrolclassic.co.za/collections/additives" id="footer-additives">Fuel Additives/Lead Replacement</a></li>
+                    <li><a href="https://www.castrolclassic.co.za/collections/greases" id="footer-greases">Grease</a></li>
+                    <li><a href="https://www.castrolclassic.co.za/collections/coolant" id="footer-coolant">Coolant/Anti Freeze</a></li>
+                    <li><a href="https://www.castrolclassic.co.za/collections/merch" id="footer-merch">Merch/Tools</a></li>
                 </ul>
             </div>
             <div class="footer-column">
                 <h3>Information</h3>
                 <ul>
-                    <li><a href="https://www.castrolclassic.co.za/policies/refund-policy">Refund policy</a></li>
-                    <li><a href="https://www.castrolclassic.co.za/policies/privacy-policy">Privacy policy</a></li>
-                    <li><a href="https://www.castrolclassic.co.za/policies/shipping-policy">Shipping policy</a></li>
-                    <li><a href="https://www.castrolclassic.co.za/policies/contact-information">Contact information</a></li>
+                    <li><a href="https://www.castrolclassic.co.za/policies/refund-policy" id="footer-refund">Refund policy</a></li>
+                    <li><a href="https://www.castrolclassic.co.za/policies/privacy-policy" id="footer-privacy">Privacy policy</a></li>
+                    <li><a href="https://www.castrolclassic.co.za/policies/shipping-policy" id="footer-shipping">Shipping policy</a></li>
+                    <li><a href="https://www.castrolclassic.co.za/policies/contact-information" id="footer-contact-info">Contact information</a></li>
                 </ul>
             </div>
             <div class="footer-column">
                 <h3>Contact Us</h3>
                 <ul>
-                    <li>Call/WhatsApp: +27 79 744 0031</li>
-                    <li>Email: info@castrolclassic.co.za</li>
+                    <li><a href="tel:+27797440031" id="footer-phone">Call/WhatsApp: +27 79 744 0031</a></li>
+                    <li><a href="mailto:info@castrolclassic.co.za" id="footer-email">Email: info@castrolclassic.co.za</a></li>
                     <li>
                         <div class="social-icons">
-                            <a href="https://www.facebook.com/imoilssa"><i class="fab fa-facebook-f"></i></a>
-                            <a href="https://www.instagram.com/castrolclassic/"><i class="fab fa-instagram"></i></a>
+                            <a href="https://www.facebook.com/imoilssa" id="social-facebook"><i class="fab fa-facebook-f"></i></a>
+                            <a href="https://www.instagram.com/castrolclassic/" id="social-instagram"><i class="fab fa-instagram"></i></a>
                         </div>
                     </li>
                 </ul>
