@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+<!-- Find My Oil Application Sitemap -->
+<url>
+  <loc>https://findmyoil.castrolclassic.co.za/</loc>
+  <lastmod>2025-04-16T17:12:27+00:00</lastmod>
+  <priority>1.0</priority>
+  <changefreq>weekly</changefreq>
+</url>
+<!-- Popular car make pages -->
+<url>
+  <loc>https://findmyoil.castrolclassic.co.za/?make=AC</loc>
+  <lastmod>2025-04-16T17:12:27+00:00</lastmod>
+  <priority>0.8</priority>
+  <changefreq>monthly</changefreq>
+</url>
+<url>
+  <loc>https://findmyoil.castrolclassic.co.za/?make=ALFA%20ROMEO</loc>
+  <lastmod>2025-04-16T17:12:27+00:00</lastmod>
+  <priority>0.8</priority>
+  <changefreq>monthly</changefreq>
+</url>
+<url>
+  <loc>https://findmyoil.castrolclassic.co.za/?make=ASTON%20MARTIN</loc>
+  <lastmod>2025-04-16T17:12:27+00:00</lastmod>
+  <priority>0.8</priority>
+  <changefreq>monthly</changefreq>
+</url>
+<url>
+  <loc>https://findmyoil.castrolclassic.co.za/?make=AUDI</loc>
+  <lastmod>2025-04-16T17:12:27+00:00</lastmod>
+  <priority>0.8</priority>
+  <changefreq>monthly</changefreq>
+</url>
+<url>
+  <loc>https://findmyoil.castrolclassic.co.za/?make=BENTLEY</loc>
+  <lastmod>2025-04-16T17:12:27+00:00</lastmod>
+  <priority>0.8</priority>
+  <changefreq>monthly</changefreq>
+</url>
+<url>
+  <loc>https://findmyoil.castrolclassic.co.za/?make=BMW</loc>
+  <lastmod>2025-04-16T17:12:27+00:00</lastmod>
+  <priority>0.8</priority>
+  <changefreq>monthly</changefreq>
+</url>
+<url>
+  <loc>https://findmyoil.castrolclassic.co.za/?make=JAGUAR</loc>
+  <lastmod>2025-04-16T17:12:27+00:00</lastmod>
+  <priority>0.8</priority>
+  <changefreq>monthly</changefreq>
+</url>
+<url>
+  <loc>https://findmyoil.castrolclassic.co.za/?make=MERCEDES%20BENZ</loc>
+  <lastmod>2025-04-16T17:12:27+00:00</lastmod>
+  <priority>0.8</priority>
+  <changefreq>monthly</changefreq>
+</url>
+<url>
+  <loc>https://findmyoil.castrolclassic.co.za/?make=MORRIS</loc>
+  <lastmod>2025-04-16T17:12:27+00:00</lastmod>
+  <priority>0.8</priority>
+  <changefreq>monthly</changefreq>
+</url>
+<url>
+  <loc>https://findmyoil.castrolclassic.co.za/?make=PORSCHE</loc>
+  <lastmod>2025-04-16T17:12:27+00:00</lastmod>
+  <priority>0.8</priority>
+  <changefreq>monthly</changefreq>
+</url>
+<url>
+  <loc>https://findmyoil.castrolclassic.co.za/?make=ROLLS%20ROYCE</loc>
+  <lastmod>2025-04-16T17:12:27+00:00</lastmod>
+  <priority>0.8</priority>
+  <changefreq>monthly</changefreq>
+</url>
+<url>
+  <loc>https://findmyoil.castrolclassic.co.za/?make=TRIUMPH</loc>
+  <lastmod>2025-04-16T17:12:27+00:00</lastmod>
+  <priority>0.8</priority>
+  <changefreq>monthly</changefreq>
+</url>
+<url>
+  <loc>https://findmyoil.castrolclassic.co.za/?make=VOLKSWAGEN</loc>
+  <lastmod>2025-04-16T17:12:27+00:00</lastmod>
+  <priority>0.8</priority>
+  <changefreq>monthly</changefreq>
+</url>
+<!-- Popular oil product pages -->
+<url>
+  <loc>https://findmyoil.castrolclassic.co.za/products/classic-xl30</loc>
+  <lastmod>2025-04-16T17:12:27+00:00</lastmod>
+  <priority>0.7</priority>
+  <changefreq>monthly</changefreq>
+</url>
+<url>
+  <loc>https://findmyoil.castrolclassic.co.za/products/classic-xxl40</loc>
+  <lastmod>2025-04-16T17:12:27+00:00</lastmod>
+  <priority>0.7</priority>
+  <changefreq>monthly</changefreq>
+</url>
+<url>
+  <loc>https://findmyoil.castrolclassic.co.za/products/classic-xl-20w50</loc>
+  <lastmod>2025-04-16T17:12:27+00:00</lastmod>
+  <priority>0.7</priority>
+  <changefreq>monthly</changefreq>
+</url>
+<url>
+  <loc>https://findmyoil.castrolclassic.co.za/products/classic-ep90</loc>
+  <lastmod>2025-04-16T17:12:27+00:00</lastmod>
+  <priority>0.7</priority>
+  <changefreq>monthly</changefreq>
+</url>
+<url>
+  <loc>https://findmyoil.castrolclassic.co.za/products/classic-ep140</loc>
+  <lastmod>2025-04-16T17:12:27+00:00</lastmod>
+  <priority>0.7</priority>
+  <changefreq>monthly</changefreq>
+</url>
+</urlset>
