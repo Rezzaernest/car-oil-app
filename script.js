@@ -135,7 +135,7 @@ document.addEventListener("DOMContentLoaded", () => {
   async function loadCarData() {
     try {
       // Try to fetch data.json
-      const response = await fetch("layout/data.json")
+      const response = await fetch("data/data.json")
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`)
       }
