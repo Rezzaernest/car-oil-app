@@ -644,26 +644,163 @@ footer {
   transform: translateY(-3px);
 }
 
-.newsletter {
-  margin-top: 30px;
-}
-
-.newsletter h4 {
-  margin-bottom: 10px;
-  font-size: 1.1rem;
-}
-
-.newsletter p {
-  margin-bottom: 15px;
-  color: rgba(255, 255, 255, 0.8);
+.copyright {
+  text-align: center;
+  margin-top: 50px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
   font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.7);
 }
 
-.newsletter form {
-  display: flex;
-  margin-top: 15px;
+/* Mobile Responsiveness */
+@media (max-width: 1200px) {
+  #make-list {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .featured-products {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
-.newsletter input {
-  flex: 1;
-  padding: 10
+@media (max-width: 992px) {
+  .hero-section h1 {
+    font-size: 2.5rem;
+  }
+
+  .search-section, .brands-section, .results-section,
+  .featured-section, .why-choose-section {
+    padding: 30px;
+  }
+
+  .benefits-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .mobile-menu-btn {
+    display: block;
+  }
+
+  .nav-container {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: var(--primary-color);
+    z-index: 100;
+    padding: 0;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+  }
+
+  .nav-container.active {
+    display: flex;
+  }
+
+  .nav-container a {
+    padding: 15px 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .nav-container a::after {
+    display: none;
+  }
+
+  .hero-section {
+    padding: 50px 20px;
+  }
+
+  .hero-section h1 {
+    font-size: 2rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1.1rem;
+  }
+
+  .search-title, .brands-title, .results-title, .featured-title {
+    font-size: 1.5rem;
+  }
+
+  #make-list {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .featured-products {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .benefits-container {
+    grid-template-columns: 1fr;
+  }
+
+  #search-button {
+    font-size: 0.9rem;
+    padding: 8px 15px;
+  }
+}
+
+@media (max-width: 576px) {
+  .container {
+    padding: 10px;
+  }
+
+  header {
+    position: relative;
+  }
+
+  .logo img {
+    height: 50px;
+  }
+
+  .search-section, .brands-section, .results-section,
+  .featured-section, .why-choose-section {
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+
+  #make-list {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  .make-item {
+    height: 45px;
+    font-size: 0.9rem;
+  }
+
+  #results-area {
+    padding: 15px;
+  }
+
+  .result-item {
+    padding: 15px;
+  }
+
+  .buy-now-link {
+    display: block;
+    margin: 10px 0 0 0;
+    text-align: center;
+  }
+
+  .search-input-wrapper {
+    flex-direction: column;
+  }
+
+  #search-button {
+    position: static;
+    width: 100%;
+    margin-top: 10px;
+    border-radius: 8px;
+  }
+
+  .footer-content {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+}
